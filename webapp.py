@@ -10,12 +10,13 @@ Description:
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 #### Imports ######################################################################################
-from flask import Flask, request								# Starts and handles an http server
-from twilio.twiml.messaging_response import MessagingResponse   # Handles SMS messaging
+from flask import Flask, request								# For handling a local http server
+from twilio.twiml.messaging_response import MessagingResponse   # Handles sending SMS messages but
+																# not neccessary in this case
 
 
 #### Globals ######################################################################################
-app = Flask(__name__)	# Flask() object that lets you start the http server and specify endpoints
+app = Flask(__name__)	# Flask() object to handle the http server options
 
 
 #### Function Definitions #########################################################################
@@ -23,9 +24,14 @@ app = Flask(__name__)	# Flask() object that lets you start the http server and s
 def hello_world():
 	return "Hello World!"
 
-@app.route("/sms") 		# Function decorator - Connects '/sms' endpoint to 'handle_text()'
+@app.route("/sms", methods=['POST'])	# This route allows POST method to the specified endpoint
+										# which is neccessary for receiving SMS data
 def handle_text():
-    return "Text Recieved"
+    phone_number = request.form['From']
+    message_body = request.form['Body']
+    print("\n\033[1;34m[+] ***-***-" + phone_number[-4:] + "\033[0m >> " + message_body)
+    led_control.send_command(message_body)
+    return ""
 
 
 #### Main #########################################################################################
