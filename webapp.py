@@ -30,7 +30,7 @@ def hello_world():
 def handle_text():
     phone_number = request.form['From']
     message_body = request.form['Body']
-    print("\n\033[1;34m[+] ***-***-" + phone_number[-4:] + "\033[0m >> " + message_body)
+    print("\n\033[1;34m[+] Webapp \033[0m\t>> Message from ***-***-" +phone_number[-4:]+ ": \"" + message_body + "\"")
     led_control.send_command(message_body)
     return ""
 

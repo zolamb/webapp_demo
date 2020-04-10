@@ -37,7 +37,6 @@ class LED_Control():
         self.strip.begin()
 
         # List of commands
-        self.clear_strip = "clear strip"
         self.rainbow_ = "rainbow"
         self.rainbow_cycle_ = "rainbow cycle"
         self.color_sweep_red = "sweep red"
@@ -47,6 +46,13 @@ class LED_Control():
         self.theater_chase_red = "theater chase red"
         self.theater_chase_blue = "theater chase blue"
 
+    ''' display_options():
+        @param1: None
+        @return: None
+
+        Description:
+                Print out the command options for the user
+    '''
     def display_options(self):
         print('''\033[1;34m[+] Options:\033[0m
         1) sweep red
@@ -58,13 +64,13 @@ class LED_Control():
         7) rainbow
         8) rainbow cycle
         
-        "clear strip" to clear the strip
         ''')
 
     
     ''' send_command():
         @param1: string     - Command to perform on the LED strip
-        @reutrn: string     - The successful command that was performed
+        @reutrn: boolean    - True on valid cmd identifier
+                            - False on invalid cmd identifier
 
         Description:
                 This function is meant to interact with the webapp.py program
@@ -73,32 +79,59 @@ class LED_Control():
     '''
     def send_command(self, command):
         command = command.lower().strip()
-        if(command == self.clear_strip):
-            self.color_sweep(self.strip, Color(0,0,0), 10)
-
+        
+        # Clear strip after every command
         if(command == self.rainbow_):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running rainbow effect")
             self.rainbow(self.strip)
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
 
         if(command == self.rainbow_cycle_):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running rainbow cycle effect")
             self.rainbow_cycle(self.strip)
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
         
         if(command == self.color_sweep_red):
+            print("[\033[1;34m[+] LED_Control \033[0m>> Running red color sweep effect")
             self.color_sweep(self.strip, Color(0, 255, 0))
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
         
         if(command == self.color_sweep_green):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running green color sweep effect")
             self.color_sweep(self.strip, Color(255, 0, 0))
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
         
         if(command == self.color_sweep_blue):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running blue color sweep effect")
             self.color_sweep(self.strip, Color(0, 0, 255))
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
         
         if(command == self.theater_chase_white):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running white theater chase effect")
             self.theater_chase(self.strip, Color(127, 127, 127))
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
         
         if(command == self.theater_chase_red):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running red theater chase effect")
             self.theater_chase(self.strip, Color(0,   127,   0))
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
         
         if(command == self.theater_chase_blue):
+            print("\033[1;34m[+] LED_Control \033[0m>> Running blue theater chase effect")
             self.theater_chase(self.strip, Color(  0,   0, 127))
+            self.color_sweep(self.strip, Color(0,0,0), 10)
+            return True
+        
+        print("\033[1;34m[+] LED_Control \033[0m>> Invalid command")
+        return False
+        
 
     # Define functions which animate LEDs in various ways.
     def color_sweep(self, strip, color, wait_ms=50):
