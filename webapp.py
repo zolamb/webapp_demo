@@ -10,7 +10,7 @@ Description:
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 #### Imports ######################################################################################
-import led_control												# For handling LED strip commands
+from led_control import LED_Control								# For handling LED strip commands
 from flask import Flask, request								# For handling a local http server
 from twilio.twiml.messaging_response import MessagingResponse   # Handles sending SMS messages but
 																# not neccessary in this case
@@ -18,7 +18,7 @@ from twilio.twiml.messaging_response import MessagingResponse   # Handles sendin
 
 #### Globals ######################################################################################
 app = Flask(__name__)	# Flask() object to handle the http server options
-
+led_control = LED_Control()
 
 #### Function Definitions #########################################################################
 @app.route("/") 		# Function decorator - Connects '/' endpoint to the 'hello_world()'

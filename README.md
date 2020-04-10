@@ -5,3 +5,4 @@ pip3 install twilio
 https://stackoverflow.com/questions/46123448/how-do-decorated-functions-work-in-flask-python-app-route
 sudo snap install ngrok
 https://ngrok.com/product
+sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
