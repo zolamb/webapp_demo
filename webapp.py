@@ -28,9 +28,13 @@ def hello_world():
 @app.route("/sms", methods=['POST'])	# This route allows POST method to the specified endpoint
 										# which is neccessary for receiving SMS data
 def handle_text():
+    # Store relevant text message data
     phone_number = request.form['From']
     message_body = request.form['Body']
-    print("\n\033[1;34m[+] Webapp \033[0m\t>> Message from ***-***-" +phone_number[-4:]+ ": \"" + message_body + "\"")
+    
+    # Interact with LED strip
+    print("\n\033[1;34m[+] Webapp \033[0m\t>> Message from ***-***-" + phone_number[-4:] + ": \"" +
+    	  message_body + "\"")
     led_control.send_command(message_body)
     return ""
 
