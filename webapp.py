@@ -37,5 +37,6 @@ def handle_text():
 
 #### Main #########################################################################################
 if __name__ == "__main__":
+    led_control.display_options()
     app.run(host='0.0.0.0', port='5000') # Starts the local http server listening on port 5000
 

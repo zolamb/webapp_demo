@@ -40,14 +40,28 @@ class LED_Control():
         self.clear_strip = "clear strip"
         self.rainbow_ = "rainbow"
         self.rainbow_cycle_ = "rainbow cycle"
-        self.theater_chase_rainbow_ = "theater chase rainbow"
         self.color_sweep_red = "sweep red"
-        self.color_sweep_red = "sweep blue"
-        self.color_sweep_red = "sweep green"
+        self.color_sweep_blue = "sweep blue"
+        self.color_sweep_green = "sweep green"
         self.theater_chase_white = "theater chase white"
         self.theater_chase_red = "theater chase red"
         self.theater_chase_blue = "theater chase blue"
 
+    def display_options(self):
+        print('''\033[1;34m[+] Options:\033[0m
+        1) sweep red
+        2) sweep blue
+        3) sweep green
+        4) theater chase white
+        5) theater chase red
+        6) theater chase blue
+        7) rainbow
+        8) rainbow cycle
+        
+        "clear strip" to clear the strip
+        ''')
+
+    
     ''' send_command():
         @param1: string     - Command to perform on the LED strip
         @reutrn: string     - The successful command that was performed
@@ -58,6 +72,7 @@ class LED_Control():
                 to execute commands on the LED strip
     '''
     def send_command(self, command):
+        command = command.lower().strip()
         if(command == self.clear_strip):
             self.color_sweep(self.strip, Color(0,0,0), 10)
 
@@ -67,23 +82,20 @@ class LED_Control():
         if(command == self.rainbow_cycle_):
             self.rainbow_cycle(self.strip)
         
-        if(command == self.theater_chase_rainbow_):
-            self.theater_chase_rainbow(self.strip)
-        
         if(command == self.color_sweep_red):
-            self.color_sweep(self.strip, Color(255, 0, 0))
-        
-        if(command == self.color_sweep_blue):
             self.color_sweep(self.strip, Color(0, 255, 0))
         
         if(command == self.color_sweep_green):
+            self.color_sweep(self.strip, Color(255, 0, 0))
+        
+        if(command == self.color_sweep_blue):
             self.color_sweep(self.strip, Color(0, 0, 255))
         
         if(command == self.theater_chase_white):
             self.theater_chase(self.strip, Color(127, 127, 127))
         
         if(command == self.theater_chase_red):
-            self.theater_chase(self.strip, Color(127,   0,   0))
+            self.theater_chase(self.strip, Color(0,   127,   0))
         
         if(command == self.theater_chase_blue):
             self.theater_chase(self.strip, Color(  0,   0, 127))
@@ -94,7 +106,7 @@ class LED_Control():
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, color)
             strip.show()
-            time.sleep(wait_ms/1000.0)
+            time.sleep(wait_ms/500.0)
      
     def theater_chase(self, strip, color, wait_ms=50, iterations=10):
         """Movie theater light style chaser animation."""
@@ -122,7 +134,7 @@ class LED_Control():
         """Draw rainbow that fades across all pixels at once."""
         for j in range(256*iterations):
             for i in range(strip.numPixels()):
-                strip.setPixelColor(i, wheel((i+j) & 255))
+                strip.setPixelColor(i, self.wheel((i+j) & 255))
             strip.show()
             time.sleep(wait_ms/1000.0)
      
@@ -130,17 +142,6 @@ class LED_Control():
         """Draw rainbow that uniformly distributes itself across all pixels."""
         for j in range(256*iterations):
             for i in range(strip.numPixels()):
-                strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
+                strip.setPixelColor(i, self.wheel((int(i * 256 / strip.numPixels()) + j) & 255))
             strip.show()
-            time.sleep(wait_ms/1000.0)
-     
-    def theater_chase_rainbow(self, strip, wait_ms=50):
-        """Rainbow movie theater light style chaser animation."""
-        for j in range(256):
-            for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, wheel((i+j) % 255))
-                strip.show()
-                time.sleep(wait_ms/1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, 0)
+            time.sleep(wait_ms/7500.0)
