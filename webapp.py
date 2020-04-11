@@ -41,6 +41,7 @@ def handle_text():
 
 #### Main #########################################################################################
 if __name__ == "__main__":
+	print("\033[1;34m[+] Phone number: \033[0m(231)-333-9003")
     led_control.display_options()
     app.run(host='0.0.0.0', port='5000') # Starts the local http server listening on port 5000
 
