@@ -20,12 +20,7 @@ app = Flask(__name__)	# Flask() object to handle the http server options
 led_control = LED_Control()
 
 #### Function Definitions #########################################################################
-@app.route("/") 		# Function decorator - Connects '/' endpoint to the 'hello_world()'
-def hello_world():
-	return "Hello World!"
-
-@app.route("/sms", methods=['POST'])	# This route allows POST method to the specified endpoint
-										# which is neccessary for receiving SMS data
+@app.route("/sms", methods=['POST']) # Function Decorator - Routes an endpoint to a function
 def handle_text():
     # Store relevant text message data
     phone_number = request.form['From']
