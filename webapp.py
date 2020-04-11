@@ -12,8 +12,6 @@ Description:
 #### Imports ######################################################################################
 from led_control import LED_Control								# For handling LED strip commands
 from flask import Flask, request								# For handling a local http server
-from twilio.twiml.messaging_response import MessagingResponse   # Handles sending SMS messages but
-																# not neccessary in this case
 
 
 #### Globals ######################################################################################
